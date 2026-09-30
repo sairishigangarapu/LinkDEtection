@@ -1,0 +1,17 @@
+{
+  "python": "3.12.3",
+  "sklearn": "1.9.1",
+  "xgboost": "3.4.1 (USE_CUDA=True)",
+  "driver": "595.84",
+  "cuda": "13.2",
+  "gpu": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "xgboost_gpu_verified": {
+    "peak_util_pct": 68.0,
+    "peak_mem_mib": 209.0,
+    "cuda_time_s": 4.14,
+    "cpu_time_s": 35.36
+  },
+  "seed": 42,
+  "split": "temporal 70/15/15",
+  "dataset": "LCORE-D unified 169682 rows, H-vs-F 76215 rows"
+}

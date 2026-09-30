@@ -1,0 +1,25 @@
+{
+  "accuracy": 0.8108982769176943,
+  "precision": 0.2396088019559902,
+  "recall": 0.44667274384685507,
+  "f1": 0.3119032463399109,
+  "roc_auc": 0.7668413326804598,
+  "pr_auc": 0.21009319063724893,
+  "tn": 8781,
+  "fp": 1555,
+  "fn": 607,
+  "tp": 490,
+  "threshold": 0.10671476433649571,
+  "train_time_s": 65.0522096157074,
+  "infer_time_s": 0.012778759002685547,
+  "test_rows": 11433,
+  "test_failures": 1097,
+  "model": "Linear SVM",
+  "params": {
+    "C": 1.0,
+    "calibration": "sigmoid-cv3",
+    "class_weight": "balanced",
+    "dual": false
+  },
+  "n_features": 130
+}

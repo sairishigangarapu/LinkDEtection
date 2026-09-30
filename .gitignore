@@ -1,0 +1,8 @@
+# Virtualenv (7 GB with CUDA torch) — recreate via requirements.txt
+.venv/
+# Python caches
+__pycache__/
+*.pyc
+*.pyo
+# OS / editor noise
+.DS_Store

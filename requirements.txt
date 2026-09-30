@@ -1,0 +1,14 @@
+joblib==1.6.0
+matplotlib==3.11.2
+numpy==2.5.3
+pandas==3.0.6
+# Pinned from the local training venv (Python 3.12.3, RTX 4060, driver 595.84, CUDA 13.2).
+pyarrow==25.0.1
+PyYAML==6.0.3
+scikit-learn==1.9.1
+scipy==1.18.1
+seaborn==0.13.2
+tabulate==0.10.0
+torch==2.14.0+cu126
+triton==3.8.0
+xgboost==3.4.1

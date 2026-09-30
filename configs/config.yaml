@@ -1,0 +1,83 @@
+# Shared configuration for the link-failure-prediction mini-project.
+# All paths are relative to the project root (link-failure-prediction/).
+
+seed: 42
+
+# Raw LCORE-D dataset location (read-only; lives outside this project dir).
+raw_data_dir: "../LCORE-D A Benchmark Dataset for Core Network Analy"
+fault_log_name: "Fault Log/FAULT_LOG.csv"
+
+# Label definition: binary target y = 1 iff `class` == positive_label.
+# Classes in `excluded_classes` are dropped from the binary task (with counts
+# logged): 'T' is a persistent degraded state whose ICMP signature
+# (loss ~= 100%) is *stronger* than that of hard failures, so keeping it as
+# "non-failure" makes F-vs-rest unlearnable; 'TH' is a single stray row.
+positive_label: "F"
+excluded_classes: ["T", "TH"]
+
+# Global temporal split (fractions of time-ordered rows).
+split:
+  train: 0.70
+  val: 0.15
+  test: 0.15
+
+# Causal rolling windows (in samples; sampling period ~= 60 s).
+rolling_windows: [5, 15]
+
+# Columns that are constant / identifiers / leakage-adjacent and must NOT be features.
+drop_cols:
+  - "path_up"            # constant == 1 everywhere
+  - "timestamp"          # ordering key only (no raw-time memorisation)
+  - "class"              # raw label
+  - "Device_name"        # raw identifier (one-hot version is used instead)
+  - "router_name"        # same as above (R4-R6 use this name)
+
+# Substring-based drops (matched against engineered names too).
+# 'Uptime (network)' is a per-device clock, not failure telemetry: trees split
+# on it to memorise WHEN training faults happened and fail after the split
+# point. 'Uptime' also catches R7's second clock 'Uptime2(network)'.
+# The missingness indicator 'uptime_missing' is lowercase and is kept.
+drop_substrings:
+  - "Uptime (network)"
+  - "Uptime2"
+  - "Uptime"
+
+random_forest:
+  n_estimators: 300
+  max_depth: null
+  min_samples_leaf: 2
+  max_features: "sqrt"
+  class_weight: "balanced_subsample"
+  random_state: 42
+  n_jobs: -1
+
+xgboost:
+  n_estimators: 600
+  max_depth: 6
+  learning_rate: 0.05
+  subsample: 0.8
+  colsample_bytree: 0.8
+  min_child_weight: 1
+  reg_lambda: 1.0
+  tree_method: "hist"
+  device: "cuda"          # hard requirement: must run on the RTX 4060
+  random_state: 42
+  n_jobs: -1
+  early_stopping_rounds: 50
+
+# Linear-kernel SVM: liblinear LinearSVC (dual=False, balanced) on standardised
+# features + sigmoid (Platt) calibration, so it emits probabilities.
+svm:
+  C: 1.0
+  max_iter: 10000
+
+# GCN extension: 2-layer full-batch node classifier on per-timestamp snapshot
+# graphs (7-node inferred tree, disjoint union per split). Same rows, same
+# temporal split, same 131 features as RF/XGBoost — only the model changes,
+# so any gain measures the value of neighbour message passing.
+gnn:
+  hidden: 64
+  dropout: 0.5
+  lr: 0.01
+  max_epochs: 500
+  patience: 50

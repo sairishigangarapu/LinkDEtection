@@ -1,0 +1,31 @@
+{
+  "accuracy": 0.8169334382926616,
+  "precision": 0.2681564245810056,
+  "recall": 0.5250683682771194,
+  "f1": 0.3550077041602465,
+  "roc_auc": 0.789720231577254,
+  "pr_auc": 0.30494579918540554,
+  "tn": 8764,
+  "fp": 1572,
+  "fn": 521,
+  "tp": 576,
+  "threshold": 0.7362187469005586,
+  "train_time_s": 0.8609175682067871,
+  "infer_time_s": 0.0003070831298828125,
+  "test_rows": 11433,
+  "test_failures": 1097,
+  "model": "GCN",
+  "params": {
+    "hidden": 64,
+    "dropout": 0.5,
+    "lr": 0.01,
+    "max_epochs": 500,
+    "patience": 50,
+    "pos_weight": 37.24372863769531
+  },
+  "n_features": 130,
+  "val_pr_auc": 0.06473133612516803,
+  "total_time_s": 163.38024830818176,
+  "device": "cuda",
+  "edges": "inferred tree (see gnn_data.py)"
+}
